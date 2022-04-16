@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   Text,
   View,
@@ -10,6 +9,7 @@ import {
   Button,
   Modal,
 } from "react-native";
+import DatePicker from "@react-native-community/datetimepicker";
 
 class Reservation extends Component {
   constructor(props) {
@@ -27,7 +27,6 @@ class Reservation extends Component {
   static navigationOptions = {
     title: "Reserve Campsite",
   };
-
   toggleModal() {
     this.setState({ showModal: !this.state.showModal });
   }
@@ -72,7 +71,7 @@ class Reservation extends Component {
             value={this.state.hikeIn}
             trackColor={{ true: "#5637DD", false: null }}
             onValueChange={(value) => this.setState({ hikeIn: value })}
-          />
+          ></Switch>
         </View>
         <View style={styles.formRow}>
           <Text style={styles.formLabel}>Date</Text>
@@ -80,7 +79,7 @@ class Reservation extends Component {
             onPress={() =>
               this.setState({ showCalendar: !this.state.showCalendar })
             }
-            title={this.state.date.toLocaleDateString("en-US")}
+            title={this.state.date}
             color="#5637DD"
             accessibilityLabel="Tap me to select a reservation date"
           />
@@ -119,9 +118,7 @@ class Reservation extends Component {
             <Text style={styles.modalText}>
               Hike-In?: {this.state.hikeIn ? "Yes" : "No"}
             </Text>
-            <Text style={styles.modalText}>
-              Date: {this.state.date.toLocaleDateString("en-US")}
-            </Text>
+            <Text style={styles.modalText}>Date: {this.state.date}</Text>
             <Button
               onPress={() => {
                 this.toggleModal();
