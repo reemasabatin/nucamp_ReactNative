@@ -18,7 +18,6 @@ export const comments = (
       const comment = action.payload;
       comment.id = state.comments.length;
       //{ ...action.payload, id: state.comments.length };- pwede kani or tung isa
-      // .concat(comment) walay pulos pareho ra gihapon stackoverflow-concat
       return { ...state, comments: state.comments.concat(comment) };
 
     default:

@@ -7,6 +7,8 @@ import {
   Modal,
   Button,
   StyleSheet,
+  Alert,
+  PanResponder,
 } from "react-native";
 import { Card, Icon, Rating, Input } from "react-native-elements";
 import { connect } from "react-redux";
@@ -14,7 +16,6 @@ import { baseUrl } from "../shared/baseUrl";
 import { postFavorite } from "../redux/ActionCreators";
 import { postComment } from "../redux/ActionCreators";
 
-//week 3 na ning animatable
 import * as Animatable from "react-native-animatable";
 
 const mapStateToProps = (state) => {
@@ -34,10 +35,45 @@ const mapDispatchToProps = {
 function RenderCampsite(props) {
   const { campsite } = props;
 
+  const recognizeDrag = ({ dx }) => (dx < -200 ? true : false);
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderEnd: (e, gestureState) => {
+      console.log("pan responder end", gestureState);
+      if (recognizeDrag(gestureState)) {
+        Alert.alert(
+          "Add Favorite",
+          "Are you sure you wish to add " + campsite.name + " to favorites?",
+          [
+            {
+              text: "Cancel",
+              style: "cancel",
+              onPress: () => console.log("Cancel Pressed"),
+            },
+            {
+              text: "OK",
+              onPress: () =>
+                props.favorite
+                  ? console.log("Already set as a favorite")
+                  : props.markFavorite(),
+            },
+          ],
+          { cancelable: false }
+        );
+      }
+      return true;
+    },
+  });
+
   if (campsite) {
     return (
-      //Week 3 animatable pati tung closing tag
-      <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+      <Animatable.View
+        animation="fadeInDown"
+        duration={2000}
+        delay={1000}
+        {...panResponder.panHandlers}
+      >
         <Card
           featuredTitle={campsite.name}
           image={{ uri: baseUrl + campsite.image }}
@@ -73,7 +109,6 @@ function RenderCampsite(props) {
   return <View />;
 }
 
-//function
 const RenderComments = ({ comments }) => {
   const renderCommentItem = ({ item }) => {
     return (
@@ -91,7 +126,6 @@ const RenderComments = ({ comments }) => {
   };
 
   return (
-    //Week 3 pa ning animatable
     <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
       <Card title="Comments">
         <FlatList
