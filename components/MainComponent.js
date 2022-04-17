@@ -23,8 +23,6 @@ import { connect } from "react-redux";
 import SafeAreaView from "react-native-safe-area-view";
 import Constants from "expo-constants";
 
-//ayaw apila tung isa kay sa sunod pa diay to
-
 import Directory from "./DirectoryComponent";
 import CampsiteInfo from "./CampsiteInfoComponent";
 import Home from "./HomeComponent";

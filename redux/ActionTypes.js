@@ -15,7 +15,7 @@ export const PARTNERS_FAILED = "PARTNERS_FAILED";
 
 export const ADD_FAVORITE = "ADD_FAVORITE";
 
-// Week 2 workshop Task 2 o 3 ata ni tung iexport nimo
+// Week 2 workshop tung iexport nimo
 export const ADD_COMMENT = "ADD_COMMENT";
 
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
