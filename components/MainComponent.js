@@ -30,6 +30,7 @@ import About from "./AboutComponent";
 import Contact from "./ContactComponent";
 import Reservation from "./ReservationComponent";
 import Favorites from "./FavoritesComponent";
+import Login from "./LoginComponent";
 
 const mapDispatchToProps = {
   fetchCampsites,
@@ -63,7 +64,6 @@ const FavoritesNavigator = createStackNavigator(
   }
 );
 
-//Directory ni dai
 const DirectoryNavigator = createStackNavigator(
   {
     Directory: {
@@ -95,8 +95,6 @@ const DirectoryNavigator = createStackNavigator(
   }
 );
 
-//HomeNav di siya
-
 const HomeNavigator = createStackNavigator(
   {
     Home: { screen: Home },
@@ -121,6 +119,7 @@ const HomeNavigator = createStackNavigator(
     }),
   }
 );
+
 const AboutNavigator = createStackNavigator(
   {
     About: { screen: About },
@@ -146,7 +145,6 @@ const AboutNavigator = createStackNavigator(
   }
 );
 
-// Contact ni dai ayg kalimti
 const ContactNavigator = createStackNavigator(
   {
     Contact: { screen: Contact },
@@ -172,7 +170,6 @@ const ContactNavigator = createStackNavigator(
   }
 );
 
-// ReservationNav ni siya
 const ReservationNavigator = createStackNavigator(
   {
     Reservation: { screen: Reservation },
@@ -189,6 +186,31 @@ const ReservationNavigator = createStackNavigator(
       headerLeft: (
         <Icon
           name="tree"
+          type="font-awesome"
+          iconStyle={styles.stackIcon}
+          onPress={() => navigation.toggleDrawer()}
+        />
+      ),
+    }),
+  }
+);
+
+const LoginNavigator = createStackNavigator(
+  {
+    Login: { screen: Login },
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: "#5637DD",
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff",
+      },
+      headerLeft: (
+        <Icon
+          name="sign-in"
           type="font-awesome"
           iconStyle={styles.stackIcon}
           onPress={() => navigation.toggleDrawer()}
@@ -220,9 +242,21 @@ const CustomDrawerContentComponent = (props) => (
   </ScrollView>
 );
 
-//MainNavigator
 const MainNavigator = createDrawerNavigator(
   {
+    Login: {
+      screen: LoginNavigator,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <Icon
+            name="sign-in"
+            type="font-awesome"
+            size={24}
+            color={tintColor}
+          />
+        ),
+      },
+    },
     Home: {
       screen: HomeNavigator,
       navigationOptions: {
@@ -231,6 +265,7 @@ const MainNavigator = createDrawerNavigator(
         ),
       },
     },
+
     Directory: {
       screen: DirectoryNavigator,
       navigationOptions: {
@@ -287,12 +322,11 @@ const MainNavigator = createDrawerNavigator(
     },
   },
   {
+    intitialRouteName: "Home",
     drawerBackgroundColor: "#CEC8FF",
     contentComponent: CustomDrawerContentComponent,
   }
 );
-
-//AppNavigator
 
 const AppNavigator = createAppContainer(MainNavigator);
 
@@ -317,8 +351,6 @@ class Main extends Component {
     );
   }
 }
-
-//Stylesheet ni tung sa task 1 o 2 sa workshop
 
 const styles = StyleSheet.create({
   container: {

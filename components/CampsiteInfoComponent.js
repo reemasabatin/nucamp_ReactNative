@@ -11,9 +11,9 @@ import {
   PanResponder,
 } from "react-native";
 import { Card, Icon, Rating, Input } from "react-native-elements";
-import { connect } from "react-redux";
-import { postFavorite, postComment } from "../redux/ActionCreators";
 import { baseUrl } from "../shared/baseUrl";
+import { postFavorite, postComment } from "../redux/ActionCreators";
+import { connect } from "react-redux";
 import * as Animatable from "react-native-animatable";
 
 const mapStateToProps = (state) => {
