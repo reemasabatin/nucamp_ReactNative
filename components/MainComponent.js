@@ -4,9 +4,6 @@ import Directory from "./DirectoryComponent";
 import CampsiteInfo from "./CampsiteInfoComponent";
 import About from "./AboutComponent";
 import Contact from "./ContactComponent";
-import Reservation from "./ReservationComponent";
-import Favorites from "./FavoritesComponent";
-import Login from "./LoginComponent";
 import Constants from "expo-constants";
 import {
   View,
@@ -30,6 +27,9 @@ import {
   fetchPromotions,
   fetchPartners,
 } from "../redux/ActionCreators";
+import Reservation from "./ReservationComponent";
+import Favorites from "./FavoritesComponent";
+import Login from "./LoginComponent";
 import NetInfo from "@react-native-community/netinfo";
 
 const mapDispatchToProps = {
@@ -336,19 +336,21 @@ class Main extends Component {
     this.props.fetchPromotions();
     this.props.fetchPartners();
 
-    NetInfo.fetch().then((connectionInfo) => {
-      Platform.OS === "ios"
-        ? Alert.alert("Initial Network Connectivity Type:", connectionInfo.type)
-        : ToastAndroid.show(
-            "Initial Network Connectivity Type: " + connectionInfo.type,
-            ToastAndroid.LONG
-          );
-    });
-
     this.unsubscribeNetInfo = NetInfo.addEventListener((connectionInfo) => {
       this.handleConnectivityChange(connectionInfo);
     });
   }
+
+  showNetInfo = async () => {
+    const connectionInfo = await NetInfo.fetch();
+
+    Platform.OS === "ios"
+      ? Alert.alert("Initial Network Connectivity Type:", connectionInfo.type)
+      : ToastAndroid.show(
+          "Initial Network Connectivity Type: " + connectionInfo.type,
+          ToastAndroid.LONG
+        );
+  };
 
   componentWillUnmount() {
     this.unsubscribeNetInfo();
@@ -374,7 +376,6 @@ class Main extends Component {
       ? Alert.alert("Connection change:", connectionMsg)
       : ToastAndroid.show(connectionMsg, ToastAndroid.LONG);
   };
-
   render() {
     return (
       <View
@@ -390,6 +391,11 @@ class Main extends Component {
 }
 
 const styles = StyleSheet.create({
+  stackIcon: {
+    marginLeft: 10,
+    color: "#fff",
+    fontSize: 24,
+  },
   container: {
     flex: 1,
   },
